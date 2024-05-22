@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="246px" height="264px" viewBox="0 0 246 264" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>branch-git-fork-svgrepo-com</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="branch-git-fork-svgrepo-com" transform="translate(12.000000, 12.000000)" stroke="#00D8FD" stroke-width="22.666667">
+            <circle id="Oval" cx="20.5" cy="20.5" r="20.5"></circle>
+            <circle id="Oval" cx="186.5" cy="20.5" r="20.5"></circle>
+            <circle id="Oval" cx="186.5" cy="124.5" r="20.5"></circle>
+            <circle id="Oval-Copy" cx="201.5" cy="219.5" r="20.5"></circle>
+            <line x1="166" y1="20" x2="42" y2="20" id="Path"></line>
+            <path d="M52,20 C69.1709909,20 83.0909091,33.96876 83.0909091,51.2 L83.0909091,103.2 C83.0909091,114.68784 92.3705091,124 103.818182,124 L166,124" id="Path"></path>
+            <path d="M83.010321,94 C82.9103531,102.178461 83.5365924,108.329307 84.8890388,112.452538 C87.2183504,119.553957 92.5299911,127.883977 92.5299911,134.371577 L92.5299911,203.249022 C92.5299911,214.709787 101.872372,224 113.397493,224 L176,224" id="Path-Copy"></path>
+        </g>
+    </g>
+</svg>

@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
+import BootSplash from 'react-native-bootsplash';
 
-function App(): React.JSX.Element {
+function App() {
+  useEffect(() => {
+    BootSplash.hide();
+  }, []);
+
   return (
     <SafeAreaView>
       <View>
