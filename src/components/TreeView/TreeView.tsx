@@ -14,7 +14,7 @@ interface TreeViewProps {
 
 export function TreeView({
   data,
-  autoSelectChildren = false,
+  autoSelectChildren = true,
   autoExpandChildren = true,
 }: TreeViewProps) {
   const {treeData, expandParent, onSelectPressed} = useTreeHelpers({

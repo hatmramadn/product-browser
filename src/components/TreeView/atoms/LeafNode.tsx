@@ -26,7 +26,10 @@ export const LeafNode = ({item, onSelect}: LeafNodeProps) => {
               />
             )}
           </View>
-          <Text style={styles.title}>{item.title}</Text>
+          <View>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.subTitle}>+{item.count} Device</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </View>
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   checkmark: {
     width: moderateScale(18),
@@ -60,5 +63,10 @@ const styles = StyleSheet.create({
     marginEnd: moderateScale(10),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  subTitle: {
+    marginTop: moderateScale(5),
+    fontSize: moderateScale(11),
+    color: colors.grey,
   },
 });

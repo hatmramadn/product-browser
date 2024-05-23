@@ -48,22 +48,11 @@ export const useTreeHelpers = ({
     }
   };
 
-  const checkIsAnyNodesSelected = (parentNode: TreeSpecificNode) => {
-    // recursive function to check if any of the children nodes are selected
-    if (parentNode?.data) {
-      const isAnyNodeSelected = (parentNode.data as TreeSpecificNode[]).some(
-        node => node.isSelected,
-      );
-      set(parentNode, 'isSelected', isAnyNodeSelected);
-      if (parentNode.parentNode) checkIsAnyNodesSelected(parentNode.parentNode);
-    }
-  };
-
   const onToggleSelection = (item: TreeSpecificNode) => {
+    item.isSelected = !item.isSelected;
     if (autoSelectChildren) {
       selectChildrenNodes(item);
     } else {
-      item.isSelected = !item.isSelected;
       if (item.isSelected) {
         selectedNodes.push(item);
       } else {
@@ -73,6 +62,19 @@ export const useTreeHelpers = ({
       }
     }
     if (item.parentNode) checkIsAnyNodesSelected(item.parentNode);
+    refreshTree();
+  };
+
+  const checkIsAnyNodesSelected = (parentNode: TreeSpecificNode) => {
+    // recursive function to check if any of the children nodes are selected
+    if (parentNode?.data) {
+      const isAnyNodeSelected = (parentNode.data as TreeSpecificNode[]).some(
+        node => node.isSelected,
+      );
+      set(parentNode, 'isSelected', isAnyNodeSelected);
+      if (parentNode.parentNode) checkIsAnyNodesSelected(parentNode.parentNode);
+    }
+    refreshTree();
   };
 
   const onSelectPressed = (item: TreeSpecificNode) => {
