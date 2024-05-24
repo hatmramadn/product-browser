@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {moderateScale, scale} from 'react-native-size-matters';
 import {colors, globalStyles} from '../../../theme';
 import {TreeSpecificNode} from '../../../models';
@@ -11,16 +11,29 @@ interface ParentNodeProps {
   item: TreeSpecificNode;
   onExpand: (item: TreeSpecificNode) => void;
   onSelect: (item: TreeSpecificNode) => void;
-  isLastNode?: boolean;
 }
-export const ParentNode = ({
-  item,
-  onExpand,
-  isLastNode,
-  onSelect,
-}: ParentNodeProps) => {
+
+export const ParentNode = ({item, onExpand, onSelect}: ParentNodeProps) => {
+  const getNodeTitleAndCount = useMemo(() => {
+    if (!item.isExpanded && item.data && item.data.length > 0) {
+      return item.data
+        .map(child => {
+          return {
+            title: `${child.title}`,
+            count: child.count,
+          };
+        })
+        .reduce((acc, curr, index, arr) => {
+          const isLastElement = arr.length - 1 === index;
+          return acc.concat(
+            `+${curr.count} ${curr.title} devices ${isLastElement ? '' : ','} `,
+          );
+        }, '');
+    }
+  }, [item?.isExpanded]);
+
   return (
-    <View style={[styles.container, isLastNode && {marginBottom: 0}]}>
+    <View style={[styles.container]}>
       <TouchableOpacity
         activeOpacity={CONSTANTS.activeTouchOpacity}
         onPress={() => onExpand(item)}>
@@ -39,21 +52,28 @@ export const ParentNode = ({
                 )}
               </View>
             </TouchableOpacity>
-            <Text style={styles.title}>{item.title}</Text>
+            <View>
+              <Text style={styles.title}>{item.title}</Text>
+              {getNodeTitleAndCount ? (
+                <Text style={styles.subTitle}>{getNodeTitleAndCount}</Text>
+              ) : null}
+            </View>
           </View>
-          {item.isExpanded ? (
-            <CollapseIcon
-              width={scale(15)}
-              height={scale(15)}
-              color={colors.lightGrey}
-            />
-          ) : (
-            <ExpandIcon
-              width={scale(15)}
-              height={scale(15)}
-              color={colors.lightGrey}
-            />
-          )}
+          <View style={{flex: 1, alignItems: 'flex-end'}}>
+            {item.isExpanded ? (
+              <CollapseIcon
+                width={scale(15)}
+                height={scale(15)}
+                color={colors.lightGrey}
+              />
+            ) : (
+              <ExpandIcon
+                width={scale(15)}
+                height={scale(15)}
+                color={colors.lightGrey}
+              />
+            )}
+          </View>
         </View>
       </TouchableOpacity>
     </View>
@@ -62,14 +82,14 @@ export const ParentNode = ({
 
 const styles = StyleSheet.create({
   container: {
-    padding: scale(10),
+    padding: moderateScale(10),
     backgroundColor: colors.white,
-    marginBottom: scale(10),
-    borderRadius: scale(5),
+    marginBottom: moderateScale(10),
+    borderRadius: moderateScale(5),
     ...globalStyles.shadow,
   },
   title: {
-    fontSize: scale(13),
+    fontSize: moderateScale(13),
     fontWeight: 'bold',
     color: colors.black,
   },
@@ -81,15 +101,21 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 5,
   },
   checkmark: {
-    width: scale(18),
-    height: scale(18),
+    width: moderateScale(18),
+    height: moderateScale(18),
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    borderRadius: scale(2),
-    marginEnd: scale(10),
+    borderRadius: moderateScale(2),
+    marginEnd: moderateScale(10),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  subTitle: {
+    marginTop: moderateScale(5),
+    fontSize: moderateScale(11),
+    color: colors.grey,
   },
 });

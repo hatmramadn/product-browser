@@ -1,9 +1,9 @@
-import React from 'react';
-import {cloneDeep, isNull, isObject, set} from 'lodash';
+import React, {useMemo} from 'react';
+import {cloneDeep, set} from 'lodash';
 
 import {TreeData, TreeSpecificNode} from '../../models';
 
-let selectedNodes: TreeSpecificNode[] = [];
+let selectedNodes: Set<TreeSpecificNode> = new Set();
 
 interface UseTreeHelpersProps {
   data: TreeData;
@@ -32,18 +32,16 @@ export const useTreeHelpers = ({
     refreshTree();
   };
 
-  const selectChildrenNodes = (item: TreeSpecificNode) => {
-    if (item.isSelected) {
-      selectedNodes.push(item);
+  const selectChildrenNodes = (item: TreeSpecificNode, isChild: boolean) => {
+    if (item.isSelected && !selectedNodes.has(item) && !isChild) {
+      selectedNodes.add(item);
     } else {
-      selectedNodes = selectedNodes.filter(
-        node => node.objectId !== item.objectId,
-      );
+      selectedNodes.delete(item);
     }
     if (item?.data) {
       (item.data as TreeSpecificNode[]).forEach(child => {
         child.isSelected = item.isSelected;
-        selectChildrenNodes(child);
+        selectChildrenNodes(child, true);
       });
     }
   };
@@ -51,28 +49,36 @@ export const useTreeHelpers = ({
   const onToggleSelection = (item: TreeSpecificNode) => {
     item.isSelected = !item.isSelected;
     if (autoSelectChildren) {
-      selectChildrenNodes(item);
+      selectChildrenNodes(item, false);
     } else {
-      if (item.isSelected) {
-        selectedNodes.push(item);
+      if (item.isSelected && !selectedNodes.has(item)) {
+        selectedNodes.add(item);
       } else {
-        selectedNodes = selectedNodes.filter(
-          node => node.objectId !== item.objectId,
-        );
+        selectedNodes.delete(item);
       }
     }
-    if (item.parentNode) checkIsAnyNodesSelected(item.parentNode);
+    if (item.parentNode) checkIsEveryNodesSelected(item.parentNode);
     refreshTree();
   };
 
-  const checkIsAnyNodesSelected = (parentNode: TreeSpecificNode) => {
-    // recursive function to check if any of the children nodes are selected
+  // recursive function to check if every children nodes are selected
+  const checkIsEveryNodesSelected = (parentNode: TreeSpecificNode) => {
     if (parentNode?.data) {
-      const isAnyNodeSelected = (parentNode.data as TreeSpecificNode[]).some(
+      const isEveryNodeSelected = (parentNode.data as TreeSpecificNode[]).every(
         node => node.isSelected,
       );
-      set(parentNode, 'isSelected', isAnyNodeSelected);
-      if (parentNode.parentNode) checkIsAnyNodesSelected(parentNode.parentNode);
+      const isSomeNodeSelected = (parentNode.data as TreeSpecificNode[]).some(
+        node => node.isSelected,
+      );
+      set(parentNode, 'isSelected', isEveryNodeSelected);
+
+      if (!isSomeNodeSelected) {
+        selectedNodes.delete(parentNode);
+      }
+    }
+
+    if (parentNode.parentNode) {
+      checkIsEveryNodesSelected(parentNode.parentNode);
     }
     refreshTree();
   };
@@ -84,12 +90,13 @@ export const useTreeHelpers = ({
 
     onToggleSelection(item);
     refreshTree();
-    onSelectHandler(selectedNodes);
+    onSelectHandler([...selectedNodes]);
   };
 
   return {
     treeData,
     expandParent,
     onSelectPressed,
+    selectedNodes: [...selectedNodes],
   };
 };

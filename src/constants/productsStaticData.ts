@@ -10,18 +10,15 @@ export const PRODUCT_LIST: TreeData = [
         id: 1,
         objectId: '1',
         title: 'Apple',
+        count: 180,
         data: [
           {
             id: 1,
             objectId: '1',
             title: 'iPhone 15',
+            count: 60,
             data: [
-              {
-                title: '64GB',
-                count: 10,
-                id: 1,
-                objectId: '1',
-              },
+              {title: '64GB', count: 10, id: 1, objectId: '1'},
               {title: '128GB', count: 20, id: 2, objectId: '2'},
               {title: '256GB', count: 30, id: 3, objectId: '3'},
             ],
@@ -30,10 +27,11 @@ export const PRODUCT_LIST: TreeData = [
             id: 2,
             objectId: '2',
             title: 'iPhone 12',
+            count: 40,
             data: [
               {title: '64GB', count: 10, id: 4, objectId: '4'},
-              {title: '128GB', count: 20, id: 5, objectId: '5'},
-              {title: '256GB', count: 30, id: 6, objectId: '6'},
+              {title: '128GB', count: 17, id: 5, objectId: '5'},
+              {title: '256GB', count: 13, id: 6, objectId: '6'},
             ],
           },
 
@@ -41,24 +39,26 @@ export const PRODUCT_LIST: TreeData = [
             id: 3,
             objectId: '3',
             title: 'iPhone 14',
+            count: 80,
             data: [
-              {title: '64GB', count: 10, id: 7, objectId: '7'},
-              {title: '128GB', count: 20, id: 8, objectId: '8'},
-              {title: '256GB', count: 30, id: 9, objectId: '9'},
+              {title: '64GB', count: 40, id: 7, objectId: '7'},
+              {title: '128GB', count: 25, id: 8, objectId: '8'},
+              {title: '256GB', count: 15, id: 9, objectId: '9'},
             ],
           },
         ],
       },
-
       {
         id: 2,
         objectId: '2',
         title: 'Samsung',
+        count: 120,
         data: [
           {
             id: 4,
             objectId: '4',
             title: 'Galaxy S24',
+            count: 60,
             data: [
               {title: '64GB', count: 10, id: 10, objectId: '10'},
               {title: '128GB', count: 20, id: 11, objectId: '11'},
@@ -69,6 +69,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 5,
             objectId: '5',
             title: 'Galaxy S23',
+            count: 60,
             data: [
               {title: '64GB', count: 10, id: 13, objectId: '13'},
               {title: '128GB', count: 20, id: 14, objectId: '14'},
@@ -81,11 +82,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 3,
         objectId: '3',
         title: 'Xiaomi',
+        count: 120,
         data: [
           {
             id: 6,
             objectId: '6',
             title: 'Mi 11',
+            count: 60,
             data: [
               {title: '64GB', count: 10, id: 16, objectId: '16'},
               {title: '128GB', count: 20, id: 17, objectId: '17'},
@@ -96,6 +99,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 4,
             objectId: '4',
             title: 'Mi 12',
+            count: 60,
             data: [
               {title: '64GB', count: 10, id: 19, objectId: '19'},
               {title: '128GB', count: 20, id: 20, objectId: '20'},
@@ -115,11 +119,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 4,
         objectId: '4',
         title: 'Apple',
+        count: 120,
         data: [
           {
             id: 7,
             objectId: '7',
             title: 'MacBook Pro 2022',
+            count: 60,
             data: [
               {title: '16"', count: 10, id: 22, objectId: '22'},
               {title: '14"', count: 20, id: 23, objectId: '23'},
@@ -130,6 +136,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 5,
             objectId: '5',
             title: 'MacBook Air 2022',
+            count: 60,
             data: [
               {title: '16"', count: 10, id: 25, objectId: '25'},
               {title: '14"', count: 20, id: 26, objectId: '26'},
@@ -142,11 +149,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 5,
         objectId: '5',
         title: 'Dell',
+        count: 120,
         data: [
           {
             id: 8,
             objectId: '8',
             title: 'XPS 15',
+            count: 60,
             data: [
               {title: '16"', count: 10, id: 28, objectId: '28'},
               {title: '14"', count: 20, id: 29, objectId: '29'},
@@ -157,6 +166,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 6,
             objectId: '6',
             title: 'XPS 13',
+            count: 60,
             data: [
               {title: '16"', count: 10, id: 31, objectId: '31'},
               {title: '14"', count: 20, id: 32, objectId: '32'},
@@ -176,11 +186,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 6,
         objectId: '6',
         title: 'Apple',
+        count: 120,
         data: [
           {
             id: 9,
             objectId: '9',
             title: 'Apple Watch Series 7',
+            count: 60,
             data: [
               {title: '40mm', count: 10, id: 34, objectId: '34'},
               {title: '44mm', count: 20, id: 35, objectId: '35'},
@@ -191,6 +203,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 7,
             objectId: '7',
             title: 'Apple Watch SE',
+            count: 60,
             data: [
               {title: '40mm', count: 10, id: 37, objectId: '37'},
               {title: '44mm', count: 20, id: 38, objectId: '38'},
@@ -203,11 +216,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 7,
         objectId: '7',
         title: 'Samsung',
+        count: 120,
         data: [
           {
             id: 10,
             objectId: '10',
             title: 'Galaxy Watch 4',
+            count: 60,
             data: [
               {title: '40mm', count: 10, id: 40, objectId: '40'},
               {title: '44mm', count: 20, id: 41, objectId: '41'},
@@ -218,6 +233,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 8,
             objectId: '8',
             title: 'Galaxy Watch 3',
+            count: 60,
             data: [
               {title: '40mm', count: 10, id: 43, objectId: '43'},
               {title: '44mm', count: 20, id: 44, objectId: '44'},
@@ -237,11 +253,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 8,
         objectId: '8',
         title: 'Samsung',
+        count: 120,
         data: [
           {
             id: 11,
             objectId: '11',
             title: 'Samsung QN900A Neo QLED 8K TV',
+            count: 60,
             data: [
               {title: '65"', count: 10, id: 46, objectId: '46'},
               {title: '75"', count: 20, id: 47, objectId: '47'},
@@ -252,6 +270,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 9,
             objectId: '9',
             title: 'Samsung QN800A Neo QLED 8K TV',
+            count: 60,
             data: [
               {title: '65"', count: 10, id: 49, objectId: '49'},
               {title: '75"', count: 20, id: 50, objectId: '50'},
@@ -264,11 +283,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 9,
         objectId: '9',
         title: 'Sony',
+        count: 120,
         data: [
           {
             id: 12,
             objectId: '12',
             title: 'Sony A90J OLED TV',
+            count: 60,
             data: [
               {title: '65"', count: 10, id: 52, objectId: '52'},
               {title: '75"', count: 20, id: 53, objectId: '53'},
@@ -279,6 +300,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 10,
             objectId: '10',
             title: 'Sony A80J OLED TV',
+            count: 60,
             data: [
               {title: '65"', count: 10, id: 55, objectId: '55'},
               {title: '75"', count: 20, id: 56, objectId: '56'},
@@ -299,11 +321,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 10,
         objectId: '10',
         title: 'Apple',
+        count: 120,
         data: [
           {
             id: 13,
             objectId: '13',
             title: 'AirPods Max',
+            count: 60,
             data: [
               {title: 'Silver', count: 10, id: 58, objectId: '58'},
               {title: 'Black', count: 20, id: 59, objectId: '59'},
@@ -314,6 +338,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 11,
             objectId: '11',
             title: 'AirPods Pro',
+            count: 60,
             data: [
               {title: 'Silver', count: 10, id: 61, objectId: '61'},
               {title: 'Black', count: 20, id: 62, objectId: '62'},
@@ -326,11 +351,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 11,
         objectId: '11',
         title: 'Sony',
+        count: 120,
         data: [
           {
             id: 14,
             objectId: '14',
             title: 'Sony WH-1000XM4',
+            count: 60,
             data: [
               {title: 'Silver', count: 10, id: 64, objectId: '64'},
               {title: 'Black', count: 20, id: 65, objectId: '65'},
@@ -341,6 +368,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 12,
             objectId: '12',
             title: 'Sony WH-1000XM3',
+            count: 60,
             data: [
               {title: 'Silver', count: 10, id: 67, objectId: '67'},
               {title: 'Black', count: 20, id: 68, objectId: '68'},
@@ -361,11 +389,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 12,
         objectId: '12',
         title: 'Apple',
+        count: 120,
         data: [
           {
             id: 15,
             objectId: '15',
-            title: 'iPad Pro 2022',
+            title: 'iPad Pro 2023',
+            count: 60,
             data: [
               {title: '11"', count: 10, id: 70, objectId: '70'},
               {title: '12.9"', count: 20, id: 71, objectId: '71'},
@@ -375,7 +405,8 @@ export const PRODUCT_LIST: TreeData = [
           {
             id: 13,
             objectId: '13',
-            title: 'iPad Air 2022',
+            title: 'iPad Air 2024',
+            count: 60,
             data: [
               {title: '11"', count: 10, id: 73, objectId: '73'},
               {title: '12.9"', count: 20, id: 74, objectId: '74'},
@@ -388,11 +419,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 13,
         objectId: '13',
         title: 'Samsung',
+        count: 120,
         data: [
           {
             id: 16,
             objectId: '16',
             title: 'Galaxy Tab S8',
+            count: 60,
             data: [
               {title: '11"', count: 10, id: 76, objectId: '76'},
               {title: '12.9"', count: 20, id: 77, objectId: '77'},
@@ -403,6 +436,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 14,
             objectId: '14',
             title: 'Galaxy Tab S7',
+            count: 60,
             data: [
               {title: '11"', count: 10, id: 79, objectId: '79'},
               {title: '12.9"', count: 20, id: 80, objectId: '80'},
@@ -422,11 +456,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 14,
         objectId: '14',
         title: 'Canon',
+        count: 120,
         data: [
           {
             id: 17,
             objectId: '17',
             title: 'Canon EOS R5',
+            count: 60,
             data: [
               {title: 'Body', count: 10, id: 82, objectId: '82'},
               {title: 'Kit', count: 20, id: 83, objectId: '83'},
@@ -437,6 +473,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 15,
             objectId: '15',
             title: 'Canon EOS R6',
+            count: 60,
             data: [
               {title: 'Body', count: 10, id: 85, objectId: '85'},
               {title: 'Kit', count: 20, id: 86, objectId: '86'},
@@ -449,11 +486,13 @@ export const PRODUCT_LIST: TreeData = [
         id: 15,
         objectId: '15',
         title: 'Sony',
+        count: 120,
         data: [
           {
             id: 18,
             objectId: '18',
             title: 'Sony A7 IV',
+            count: 60,
             data: [
               {title: 'Body', count: 10, id: 88, objectId: '88'},
               {title: 'Kit', count: 20, id: 89, objectId: '89'},
@@ -464,6 +503,7 @@ export const PRODUCT_LIST: TreeData = [
             id: 16,
             objectId: '16',
             title: 'Sony A7 III',
+            count: 60,
             data: [
               {title: 'Body', count: 10, id: 91, objectId: '91'},
               {title: 'Kit', count: 20, id: 92, objectId: '92'},

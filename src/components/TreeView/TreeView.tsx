@@ -1,30 +1,31 @@
-import {FlatList, ListRenderItem, View} from 'react-native';
+import {FlatList, ListRenderItem, Text, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {TreeData, TreeSpecificNode} from '../../models';
 import {useTreeHelpers} from './useTreeHelper';
 import {LeafNode, ParentNode} from './atoms';
+import {SelectionChip} from './atoms/SelectionChip';
 
 interface TreeViewProps {
   data: TreeData;
   autoSelectChildren?: boolean;
   autoExpandChildren?: boolean;
-  onSelect: (item: TreeSpecificNode) => void;
+  onSelect: (item: TreeSpecificNode[]) => void;
 }
 
 export function TreeView({
   data,
   autoSelectChildren = true,
   autoExpandChildren = true,
+  onSelect,
 }: TreeViewProps) {
-  const {treeData, expandParent, onSelectPressed} = useTreeHelpers({
-    data,
-    autoSelectChildren,
-    autoExpandChildren,
-    onSelectHandler: items => {
-      console.log(items);
-    },
-  });
+  const {treeData, expandParent, onSelectPressed, selectedNodes} =
+    useTreeHelpers({
+      data,
+      autoSelectChildren,
+      autoExpandChildren,
+      onSelectHandler: onSelect,
+    });
 
   /*
     Render each item in the list recursively.
@@ -69,6 +70,7 @@ export function TreeView({
         data={treeData}
         renderItem={renderItem}
         keyExtractor={item => item.objectId}
+        ListFooterComponent={<SelectionChip selectedNodes={selectedNodes} />}
       />
     </View>
   );
