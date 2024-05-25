@@ -94,10 +94,10 @@ export const useTreeHelpers = ({
   };
 
   const unpackSelectedNodesBeforeUnselect = (item: TreeSpecificNode) => {
-    if (!item.parentNode || !autoSelectChildren) {
+    if (!item.parentNode) {
       return;
     }
-    if (!item.isSelected && item.parentNode && autoSelectChildren) {
+    if (!item.isSelected && item.parentNode) {
       selectedNodes.delete(item);
       selectedNodes.delete(item.parentNode);
 

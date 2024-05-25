@@ -13,13 +13,13 @@ export const Products = () => {
         autoSelectChildren={false}
         autoExpandChildren={false}
         onSelect={items => {
-          console.log('Selected items:', items);
+          // console.log('Selected items:', items);
         }}
         onItemExpand={item => {
-          console.log('Expanded item:', item);
+          // console.log('Expanded item:', item);
         }}
         onItemSelect={item => {
-          console.log('Selected item:', item);
+          // console.log('Selected item:', item);
         }}
         // renderSelectionChip={chip => {
         //   return <></>;
