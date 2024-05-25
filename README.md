@@ -1,6 +1,10 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Preview
 
 # Getting Started
+
+
+https://github.com/hatmramadn/product-browser/assets/20639687/47ce2869-009a-4a91-bdcb-aee3c9ac4229
+
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
@@ -46,34 +50,81 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+# Data Type
 
-Now that you have successfully run the app, let's modify it.
+```tsx
+type GenericTreeNode = {
+  id: number;
+  objectId: string;
+  title: string;
+  data?: GenericTreeNode[];
+  count?: number;
+}
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+type TreeSpecificNode = GenericTreeNode & {
+  isExpanded?: boolean;
+  isSelected?: boolean;
+  parentNode?: TreeSpecificNode;
+};
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+type TreeData = GenericTreeNode[];
 
-## Congratulations! :tada:
+type SelectionChip = {
+  title: string;
+  isAll: boolean;
+  selectedChildren: string;
+  isLeaf: boolean | undefined;
+  parentTitle: string | undefined;
+};
 
-You've successfully run and modified your React Native App. :partying_face:
+const PRODUCT_LIST: TreeData = [
+  {
+    id: 1,
+    objectId: "4399e8b7-921e-4c0a-895a-7de42684fd68",
+    title: "Phones",
+    data: [
+      {
+        id: 1,
+        objectId: "c0b4d745-2f0a-4bcd-bdc2-eb6a8ebfc46b",
+        title: "Apple",
+        count: 180,
+        data: [
+          {
+            id: 1,
+            objectId: "81428cd4-ba9a-49b3-be8d-a05122e01fb3",
+            title: "iPhone 15",
+            count: 60,
+            data: [
+              {
+                title: "64GB",
+                count: 10,
+                id: 1,
+                objectId: "81428cd4-ba9a-49b3-be8d-a05122e01fb3",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
 
-### Now what?
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+# **Properties**
 
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+| Prop | Default | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| data | - | TreeData | true | Array of data objects Must be of TreeData Type. |
+| autoSelectChildren | false | boolean | false | When parent node is selected it will recursively select all of its children. |
+| autoExpandChildren | false | bool | false | When parent expand is pressed it will expand its children. |
+| onSelect | - | (items: TreeSpecificNode[]) => void | true | Event handler which is called when any item is selected returning all selected items array (can be used to sync tree state with any local component state) |
+| onItemExpand | - | (item: TreeSpecificNode) => void | false | Event handler which is called when the node container or expand button pressed (can be used to catch pressed item) |
+| onItemSelect | - | (item: TreeSpecificNode) => void | false | Similar to onSelect but returning the selected node only instead of all selected nodes array (can be used to build your own state instead of tree state)  |
+| renderSelectionChip | - | (chip: SelectionChip) => JSX.Element | false | Render selection chip instead of default component. |
+| selectionChipContainerStyle | - | ViewStyle | false | Customize the chip container view. |
+| nodeContainerStyle | - | ViewStyle | false | Control style of each tree node. |
+| renderExpandCollapseIcon | - | (isExpanded: boolean) => React.ReactNode | false | Change the expand and collapse icon. |
+| renderCheckMark | - | (isSelected: boolean) => React.ReactNode) | false | Change check mark icon. |
+| renderParentItemContent | - | (itemTitle: string, subNodeTitleCount: string, isExpanded: boolean) => React.ReactNode | false | Change parent nodes content container this only includes title and sub nodes title and count.  |
+| renderLeafNodeContent | - | (itemTitle: string, itemCount: string) => React.ReactNode | false | similar to renderParentItemContent |
