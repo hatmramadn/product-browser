@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React from 'react';
 import {moderateScale, scale} from 'react-native-size-matters';
 import {colors, globalStyles} from '../../../theme';
@@ -9,27 +15,51 @@ import CheckMarkIcon from '../../../assets/icons/CheckMarkIcon';
 interface LeafNodeProps {
   item: TreeSpecificNode;
   onSelect: (item: TreeSpecificNode) => void;
+  renderCheckMark?: (isSelected: boolean) => React.ReactNode;
+  renderItemContent?: (itemTitle: string, itemCount: string) => React.ReactNode;
+  nodeContainerStyle?: ViewStyle;
 }
-export const LeafNode = ({item, onSelect}: LeafNodeProps) => {
+export const LeafNode = ({
+  item,
+  onSelect,
+  nodeContainerStyle,
+  renderCheckMark,
+  renderItemContent,
+}: LeafNodeProps) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, nodeContainerStyle && nodeContainerStyle]}
+      testID={`${item.title}_leafNode`}>
       <TouchableOpacity
         activeOpacity={CONSTANTS.activeTouchOpacity}
+        testID={`${item.title}_leafNodeSelectButton`}
         onPress={() => onSelect(item)}>
         <View style={styles.row}>
-          <View style={styles.checkmark}>
-            {item.isSelected && (
-              <CheckMarkIcon
-                width={moderateScale(17)}
-                height={moderateScale(17)}
-                color={colors.secondary}
-              />
-            )}
-          </View>
-          <View>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.subTitle}>+{item.count} Device</Text>
-          </View>
+          {renderCheckMark ? (
+            renderCheckMark(!!item.isSelected)
+          ) : (
+            <View style={styles.checkmark}>
+              {item.isSelected && (
+                <CheckMarkIcon
+                  width={moderateScale(17)}
+                  height={moderateScale(17)}
+                  color={colors.secondary}
+                />
+              )}
+            </View>
+          )}
+
+          {renderItemContent ? (
+            renderItemContent(
+              item.title,
+              item.count ? item.count.toString() : '',
+            )
+          ) : (
+            <View>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.subTitle}>+{item.count} Device</Text>
+            </View>
+          )}
         </View>
       </TouchableOpacity>
     </View>

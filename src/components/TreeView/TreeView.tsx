@@ -1,4 +1,4 @@
-import {FlatList, ListRenderItem, Text, View} from 'react-native';
+import {FlatList, ListRenderItem, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import {TreeData, TreeSpecificNode} from '../../models';
@@ -11,13 +11,38 @@ interface TreeViewProps {
   autoSelectChildren?: boolean;
   autoExpandChildren?: boolean;
   onSelect: (item: TreeSpecificNode[]) => void;
+  onItemExpand?: (item: TreeSpecificNode) => void;
+  onItemSelect?: (item: TreeSpecificNode) => void;
+  renderParentItemContent?: (
+    itemTitle: string,
+    subNodeTitleCount: string,
+    isExpanded: boolean,
+  ) => React.ReactNode;
+  renderLeafNodeContent?: (
+    itemTitle: string,
+    itemCount: string,
+  ) => React.ReactNode;
+  renderCheckMark?: (isSelected: boolean) => React.ReactNode;
+  renderExpandCollapseIcon?: (isExpanded: boolean) => React.ReactNode;
+  renderSelectionChip?: (chip: SelectionChip) => JSX.Element;
+  nodeContainerStyle?: ViewStyle;
+  selectionChipContainerStyle?: ViewStyle;
 }
 
 export function TreeView({
   data,
-  autoSelectChildren = true,
-  autoExpandChildren = true,
+  autoSelectChildren = false,
+  autoExpandChildren = false,
   onSelect,
+  onItemExpand,
+  onItemSelect,
+  renderParentItemContent,
+  renderLeafNodeContent,
+  renderCheckMark,
+  renderExpandCollapseIcon,
+  nodeContainerStyle,
+  renderSelectionChip,
+  selectionChipContainerStyle,
 }: TreeViewProps) {
   const {treeData, expandParent, onSelectPressed, selectedNodes} =
     useTreeHelpers({
@@ -25,6 +50,8 @@ export function TreeView({
       autoSelectChildren,
       autoExpandChildren,
       onSelectHandler: onSelect,
+      onItemExpand,
+      onItemSelect,
     });
 
   /*
@@ -40,9 +67,19 @@ export function TreeView({
             onExpand={expandParent}
             item={item}
             onSelect={onSelectPressed}
+            renderParentItemContent={renderParentItemContent}
+            renderExpandCollapseIcon={renderExpandCollapseIcon}
+            renderCheckMark={renderCheckMark}
+            nodeContainerStyle={nodeContainerStyle}
           />
         ) : (
-          <LeafNode item={item} onSelect={onSelectPressed} />
+          <LeafNode
+            item={item}
+            onSelect={onSelectPressed}
+            renderItemContent={renderLeafNodeContent}
+            renderCheckMark={renderCheckMark}
+            nodeContainerStyle={nodeContainerStyle}
+          />
         )}
         <View style={styles.nodeSublingsContainer}>
           {isParent && isExpanded && (
@@ -64,13 +101,19 @@ export function TreeView({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="treeView">
       <FlatList
         contentContainerStyle={styles.flatListContentContainer}
         data={treeData}
         renderItem={renderItem}
         keyExtractor={item => item.objectId}
-        ListFooterComponent={<SelectionChip selectedNodes={selectedNodes} />}
+        ListFooterComponent={
+          <SelectionChip
+            selectedNodes={selectedNodes}
+            containerStyle={selectionChipContainerStyle}
+            renderChip={renderSelectionChip}
+          />
+        }
       />
     </View>
   );

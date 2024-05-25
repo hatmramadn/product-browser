@@ -1,29 +1,85 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {TreeSpecificNode} from '../../../models';
 import {moderateScale, scale} from 'react-native-size-matters';
 import {colors, globalStyles} from '../../../theme';
 
+export type SelectionChip = {
+  title: string;
+  isAll: boolean;
+  selectedChildren: string;
+  isLeaf: boolean | undefined;
+  parentTitle: string | undefined;
+};
 interface SelectionChipProps {
   selectedNodes: TreeSpecificNode[];
+  containerStyle?: ViewStyle;
+  renderChip?: (chip: SelectionChip) => JSX.Element;
 }
-export const SelectionChip = ({selectedNodes}: SelectionChipProps) => {
+export const SelectionChip = ({
+  selectedNodes,
+  containerStyle,
+  renderChip,
+}: SelectionChipProps) => {
   const formatedSelectedNodes = () => {
-    const lookupTable: {[key: string]: TreeSpecificNode[]} = {};
+    const lookupTable: {
+      [key: string]: {
+        isAllSelected: boolean;
+        selectedNodes: string[];
+        isLeaf?: boolean;
+        parentTitle?: string;
+      };
+    } = {};
+
     selectedNodes.forEach(node => {
-      if (node?.parentNode?.title) {
-        lookupTable[node.parentNode.title] = [];
+      if (node.data) {
+        if (!lookupTable[node.title]) {
+          lookupTable[node.title] = {
+            isAllSelected: false,
+            selectedNodes: [],
+            isLeaf: false,
+          };
+        }
       } else {
-        lookupTable[node.title] = [];
+        if (node.parentNode && node.parentNode.data) {
+          if (!lookupTable[node.parentNode.title]) {
+            lookupTable[node.parentNode.title] = {
+              isAllSelected: false,
+              selectedNodes: [],
+              isLeaf: true,
+            };
+          }
+        }
+      }
+
+      if (node.data && node.parentNode) {
+        lookupTable[node.title].parentTitle = node.parentNode.title;
       }
     });
 
     selectedNodes.forEach(node => {
-      if (node.parentNode) {
-        lookupTable[node.parentNode.title]?.push(node);
+      if (node.data) {
+        const isAllSelected = node.data.every(
+          (child: TreeSpecificNode) => child.isSelected,
+        );
+        lookupTable[node.title].isAllSelected = isAllSelected;
+        if (!isAllSelected) {
+          lookupTable[node.title].selectedNodes = node.data
+            .filter((child: TreeSpecificNode) => child.isSelected)
+            .map((child: TreeSpecificNode) => child.title);
+        }
       } else {
-        if (node.data) {
-          lookupTable[node.title] = node.data;
+        if (node.parentNode && node.parentNode.data) {
+          const isAllLeafsSelected = node.parentNode.data.every(
+            (child: TreeSpecificNode) => child.isSelected,
+          );
+          lookupTable[node.parentNode.title].isAllSelected = isAllLeafsSelected;
+          if (!isAllLeafsSelected) {
+            lookupTable[node.parentNode.title].selectedNodes =
+              node.parentNode.data
+                .filter((child: TreeSpecificNode) => child.isSelected)
+                .map((child: TreeSpecificNode) => child.title);
+          }
         }
       }
     });
@@ -32,26 +88,39 @@ export const SelectionChip = ({selectedNodes}: SelectionChipProps) => {
   };
 
   const selectedNodesArray = Object.keys(formatedSelectedNodes()).map(key => {
+    const nodes = formatedSelectedNodes()[key];
     return {
       title: key,
-      children: formatedSelectedNodes()
-        [key].map(node => node.title)
-        .join(', '),
+      isAll: nodes.isAllSelected,
+      selectedChildren: nodes.selectedNodes.join(', '),
+      isLeaf: nodes.isLeaf,
+      parentTitle: nodes.parentTitle,
     };
   });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="selectionChip">
       <FlatList
         numColumns={2}
         columnWrapperStyle={styles.colWrapper}
         data={selectedNodesArray}
-        renderItem={({item}) => (
-          <View style={styles.chipContainer}>
-            <Text style={styles.chipText}>{item.title}: </Text>
-            <Text style={styles.chipText}>{item.children}</Text>
-          </View>
-        )}
+        renderItem={({item}) =>
+          renderChip ? (
+            renderChip(item)
+          ) : (
+            <View
+              style={[styles.chipContainer, containerStyle && containerStyle]}>
+              <Text style={styles.chipText}>
+                {!item.isLeaf
+                  ? `All: ${item.selectedChildren} ${item.title}`
+                  : `${item.title}: ${item.selectedChildren}`}
+              </Text>
+              {item.parentTitle && (
+                <Text style={styles.chipText}> {item.parentTitle}</Text>
+              )}
+            </View>
+          )
+        }
       />
     </View>
   );
